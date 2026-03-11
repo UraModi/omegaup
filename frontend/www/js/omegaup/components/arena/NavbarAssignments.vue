@@ -1,28 +1,26 @@
 <template>
   <div class="w-100 mt-2">
     <button
+      v-if="previousAssignment !== null"
       class="btn btn-primary col-md-12 col-sm-12 col-xs-12 mb-2"
-      :disabled="previousAssignment === null"
-      :title="previousAssignment !== null ? previousAssignment.name : ''"
+      :title="previousAssignment.name"
       role="button"
       @click="$emit('navigate-to-assignment', previousAssignment.alias)"
     >
       <font-awesome-icon
-        v-if="previousAssignment !== null"
         :icon="['fas', 'chevron-circle-left']"
       />
-      {{ previousAssignment !== null ? previousAssignment.name : '-' }}
+      {{ previousAssignment.name }}
     </button>
     <button
+      v-if="nextAssignment !== null"
       class="btn btn-primary col-md-12 col-sm-12 col-xs-12"
-      :disabled="nextAssignment === null"
-      :title="nextAssignment !== null ? nextAssignment.name : ''"
+      :title="nextAssignment.name"
       role="button"
       @click="$emit('navigate-to-assignment', nextAssignment.alias)"
     >
-      {{ nextAssignment !== null ? nextAssignment.name : '-' }}
+      {{ nextAssignment.name }}
       <font-awesome-icon
-        v-if="nextAssignment !== null"
         :icon="['fas', 'chevron-circle-right']"
       />
     </button>
@@ -69,7 +67,6 @@ export default class ArenaNavbarAssignments extends Vue {
   }
 
   private get currentAssignmentIndex(): number {
-    // Getting index of current assignment
     return this.assignments.findIndex(
       (assignment) => assignment.alias === this.currentAssignment.alias,
     );
